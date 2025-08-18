@@ -8,32 +8,58 @@ const ToDoList = () => {
 
     const addTask = (newtask) =>{
         if(newtask != ""){
-            setTasks([...tasks, newtask]);
+            setTasks([...tasks, {value:newtask, delete:false}]);
             setTask("");
         }
     }
 
+
+    const showDelete = (taskToDelete) => {
+        tasks[taskToDelete].delete = true;
+    }
+
+    const hideDelete = (taskToDelete) => {
+        tasks[taskToDelete].delete = false;
+    }
+
+    const deleteItem = (taskToDelete) => {
+        const updatedItems = tasks.filter((item, index) => index !== taskToDelete);
+        setTasks(updatedItems);
+    }
+
     return (
         <div className="col-5">
-            <input type="text" onChange={e => setTask(e.target.value)} onSubmit={addTask(task)} value={task} />
-            <button onClick={() => {addTask(task)}} type="button" className="btn btn-primary">Add task</button>
-            <ul className="list-group mt-5">
+            <ul className="list-group">
+                <li className="list-group-item p-auto">
+                    <input 
+                        className="float-start" 
+                        type="text" 
+                        placeholder="What needs to be done?" 
+                        onChange={e => setTask(e.target.value)} 
+                        onKeyDown={e => {
+                                if (e.key == "Enter"){
+                                    addTask(task);
+                                }
+                            }
+                        } 
+                        value={task} 
+                    />
+                    <button onClick={() => {addTask(task)}} type="button" className="float-end btn btn-primary">Add task</button>
+                </li>
                 {tasks.map((taskInList,index)=>{
                         return (
-                            <li className="list-group-item p-auto" key={index}>
+                            <li className="list-group-item p-auto" key={index} onMouseEnter={() => showDelete(index)} onMouseLeave={() => hideDelete(index)}>
                                 <div className="container-fluid">
-                                    <p className="float-start">{taskInList}</p>
-                                    <p className="float-end">X</p>
+                                    <p className="float-start">{taskInList.value}</p>
+                                    <p onClick={() => deleteItem(index)} className="float-end text-danger">{tasks[index].delete == true ? "X" : ""}</p>
                                 </div>
                             </li>
                         );
                     }
                 )}
                 <li className="list-group-item p-auto">
-                                <div className="container-fluid">
-                                    <p className="float-start">{tasks.length} Items left</p>
-                                </div>
-                            </li>
+                        <p className="float-start">{tasks.length == 0 ? "No tasks, add a task": `${tasks.length} Items left`}</p>
+                </li>
             </ul>
         </div>
     );
