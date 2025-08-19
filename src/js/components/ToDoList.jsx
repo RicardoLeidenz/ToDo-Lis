@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 //create your first component
 const ToDoList = () => {
@@ -13,7 +13,6 @@ const ToDoList = () => {
         }
     }
 
-
     const showDelete = (taskToDelete) => {
         tasks[taskToDelete].delete = true;
     }
@@ -26,13 +25,17 @@ const ToDoList = () => {
         const updatedItems = tasks.filter((item, index) => index !== taskToDelete);
         setTasks(updatedItems);
     }
+    
+    useEffect(() => {
+        setTasks([...tasks]);
+    },);
 
     return (
         <div className="col-5">
             <ul className="list-group">
-                <li className="list-group-item p-auto">
+                <li className="list-group-item row p-auto">
                     <input 
-                        className="float-start" 
+                        className="float-start col-7" 
                         type="text" 
                         placeholder="What needs to be done?" 
                         onChange={e => setTask(e.target.value)} 
@@ -44,11 +47,11 @@ const ToDoList = () => {
                         } 
                         value={task} 
                     />
-                    <button onClick={() => {addTask(task)}} type="button" className="float-end btn btn-primary">Add task</button>
+                    <button onClick={() => {addTask(task)}} type="button" className="float-end btn btn-primary col-4">Add</button>
                 </li>
                 {tasks.map((taskInList,index)=>{
                         return (
-                            <li className="list-group-item p-auto" key={index} onMouseEnter={() => showDelete(index)} onMouseLeave={() => hideDelete(index)}>
+                            <li className="list-group-item row" key={index} onMouseEnter={() => showDelete(index)} onMouseLeave={() => hideDelete(index)}>
                                 <div className="container-fluid">
                                     <p className="float-start">{taskInList.value}</p>
                                     <p onClick={() => deleteItem(index)} className="float-end text-danger">{tasks[index].delete == true ? "X" : ""}</p>
@@ -57,7 +60,7 @@ const ToDoList = () => {
                         );
                     }
                 )}
-                <li className="list-group-item p-auto">
+                <li className="list-group-item p-auto row">
                         <p className="float-start">{tasks.length == 0 ? "No tasks, add a task": `${tasks.length} Items left`}</p>
                 </li>
             </ul>
