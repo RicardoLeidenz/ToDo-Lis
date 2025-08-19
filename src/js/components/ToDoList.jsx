@@ -9,23 +9,24 @@ const ToDoList = () => {
     const addTask = (newtask) =>{
         if(newtask != ""){
             setTasks([...tasks, {value:newtask, delete:false}]);
+            //Restart task when submitted
             setTask("");
         }
     }
-
+    //Shows the X on list element
     const showDelete = (taskToDelete) => {
         tasks[taskToDelete].delete = true;
     }
-
+    //Hides the X on list element
     const hideDelete = (taskToDelete) => {
         tasks[taskToDelete].delete = false;
     }
-
+    //Deletes item from the list
     const deleteItem = (taskToDelete) => {
         const updatedItems = tasks.filter((item, index) => index !== taskToDelete);
         setTasks(updatedItems);
     }
-    
+    //Update the list so the X shows when hovered over
     useEffect(() => {
         setTasks([...tasks]);
     },);
