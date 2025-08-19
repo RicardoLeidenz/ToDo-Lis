@@ -26,4 +26,6 @@ This is a simple TODO list application built with **React.js**. It allows users 
 
 ## 🚀 Running the App  
 
-simply run "npm run start" on the console.
+1. Simply type in the console:  
+   ```bash
+   npm run start
