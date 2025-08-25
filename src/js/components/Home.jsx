@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import ToDoList from "./ToDoList";
 
-//create your first component
 const Home = () => {
 	return (
 		<div className="row justify-content-center">
