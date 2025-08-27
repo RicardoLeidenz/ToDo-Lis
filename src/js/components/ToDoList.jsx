@@ -76,7 +76,7 @@ const ToDoList = () => {
 				headers: {"content-type":"application/json"},
 				body: JSON.stringify(
 					{
-						"label": newtask,
+						"label": newtask.trim(),
 						"is_done": false
 					}
 				)
