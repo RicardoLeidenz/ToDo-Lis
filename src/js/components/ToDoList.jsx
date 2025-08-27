@@ -70,13 +70,15 @@ const ToDoList = () => {
 
 	//Add a task to the list
 	const addTask = async (newtask) =>{
+		newtask = newtask.trim()
+		setTask("")
 		if(newtask != ""){
 			let options = {
 				method: "POST",
 				headers: {"content-type":"application/json"},
 				body: JSON.stringify(
 					{
-						"label": newtask.trim(),
+						"label": newtask,
 						"is_done": false
 					}
 				)
